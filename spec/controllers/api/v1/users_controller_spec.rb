@@ -57,9 +57,12 @@ RSpec.describe Api::V1::UsersController, type: :controller do
   end
 
   describe "PUT/PATCH #update" do
+    before :each do
+      @user = FactoryGirl.create :user
+      api_authorization_header @user.auth_token
+    end
     context "successfully updated" do
       before(:each) do
-        @user = FactoryGirl.create :user
         patch :update, params: {id: @user.id, user: {email: "abc@gmail.com"}}
       end
 
@@ -73,7 +76,6 @@ RSpec.describe Api::V1::UsersController, type: :controller do
 
     context "failed update" do
       before(:each) do
-        @user = FactoryGirl.create :user
         patch :update, params: {id: @user.id, user: {email: "abc"}}
       end
 
@@ -94,6 +96,7 @@ RSpec.describe Api::V1::UsersController, type: :controller do
   describe "DELETE #destroy" do
     before(:each) do
       @user = FactoryGirl.create :user
+      api_authorization_header @user.auth_token
       delete :destroy, params: {id: @user.id}
     end
 

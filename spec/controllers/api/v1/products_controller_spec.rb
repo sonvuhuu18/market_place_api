@@ -12,6 +12,11 @@ RSpec.describe Api::V1::ProductsController, type: :controller do
       expect(products_response[:title]).to eql @product.title
     end
 
+    it "" do
+      products_response = json_response
+      expect(products_response[:user][:email]).to eql @product.user.email
+    end
+
     it {is_expected.to respond_with 200}
   end
 
@@ -24,6 +29,13 @@ RSpec.describe Api::V1::ProductsController, type: :controller do
     it "returns 4 records from the database" do
       products_response = json_response
       expect(products_response.size).to eql 4
+    end
+
+    it "" do
+      products_response = json_response
+      products_response.each do |product_response|
+        expect(product_response[:user]).to be_present
+      end
     end
 
     it {is_expected.to respond_with 200}

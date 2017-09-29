@@ -18,6 +18,11 @@ RSpec.describe Api::V1::UsersController, type: :controller do
       expect(user_response[:email]).to eql @user.email
     end
 
+    it "" do
+      user_response = json_response
+      expect(user_response[:product_ids]).to eql []
+    end
+
     it {is_expected.to respond_with 200}
   end
 
